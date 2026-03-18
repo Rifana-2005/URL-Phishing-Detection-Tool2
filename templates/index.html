@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentryURL | Advanced Phishing Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<main class="container">
+    <div class="glass-card">
+        <h1>SentryURL</h1>
+        <p class="subtitle">AI-Powered URL Phishing Analysis & Risk Assessment</p>
+
+        <form method="POST" id="phish-form">
+            <div class="input-group">
+                <input type="text" name="url" id="url-input" placeholder="Paste URL to analyze (e.g., https://secure-login.com)" required autocomplete="off">
+            </div>
+            <button type="submit" id="submit-btn">Analyze Link Safety</button>
+        </form>
+
+        {% if result %}
+        <section class="result-container" id="results">
+            <div class="score-badge {% if result.level == 'High' %}high{% elif result.level == 'Medium' %}medium{% else %}low{% endif %}">
+                Risk Level: {{ result.level }}
+            </div>
+            
+            <p style="margin-bottom: 0.5rem; font-weight: 700;">Analyzed URL:</p>
+            <div class="url-display">
+                {{ result.url }}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <span style="color: var(--text-secondary);">Safety Score</span>
+                <span style="font-weight: 800; font-size: 1.2rem; color: {% if result.level == 'High' %}var(--high-risk){% elif result.level == 'Medium' %}var(--medium-risk){% else %}var(--low-risk){% endif %}">
+                    {{ 100 - result.score }}/100
+                </span>
+            </div>
+
+            <h4 style="margin-bottom: 1rem; font-size: 1.1rem;">Analysis Findings:</h4>
+            <ul class="reasons-list">
+                {% for reason in result.reasons %}
+                <li>{{ reason }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
