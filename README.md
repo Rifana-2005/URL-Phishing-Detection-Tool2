@@ -114,4 +114,3 @@ phishing-detection/
 
 👩‍💻 Author
 Rifana Fathima A 
-For your repository, I recommend adding **3–5 screenshots** under a `screenshots/` folder and showing them in the README under a **Screenshots** section. This makes your final-year project repository much more complete and professional.
